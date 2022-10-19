@@ -50,5 +50,21 @@ Restful API made in goLang using principles of Clean Code and Clean Architecture
 │   ├── errors
 │   ├── validations
 │   ├── utils
+│   ├── mocks
 └── README.md
 ```
+
+# Overview
+
+- Cadastro de Usuários
+  - Autenticação (jwt)
+  - CRUD
+- Cadastro de Loja (Relacionado ao usuário)
+  - Autenticado
+  - CRUD de Loja
+- Cadastro de Produtos
+  - Autenticado
+  - CRUD de Produtos
+  - Paginação
+- Entrada/Saida
+- Balance
