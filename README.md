@@ -9,7 +9,7 @@ Restful API made in goLang using principles of Clean Code and Clean Architecture
 - Swagger
 - Docker
 - Dependency Injection
-- Postgres
+- Postgres (gorm)
 - GraphQL
 - Errors (Tratativa de Errors)
 - Unity Tests
