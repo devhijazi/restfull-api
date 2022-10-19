@@ -10,12 +10,16 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+
+	_ "github.com/devhijazi/api/cmd/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
 	initDotEnv()
 	initDatabase()
-	initSwagger()
+	initSwagger(&gin.RouterGroup{})
 	initServer()
 }
 
@@ -31,7 +35,14 @@ func initDatabase() {
 	database.Init()
 }
 
-func initSwagger() {}
+func initSwagger(rg *gin.RouterGroup) {
+	serverPort := fmt.Sprintf(":%s", os.Getenv("PORT"))
+
+	docsURL := fmt.Sprintf("http://localhost%s/docs/doc.json", serverPort)
+
+	rg.GET("/cmd/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL(docsURL)))
+
+}
 
 func initServer() {
 	gin.SetMode(gin.ReleaseMode)
@@ -52,7 +63,8 @@ func initServer() {
 }
 
 func initRoutes(r *gin.Engine) {
-  user := r.Group("/users")
-  
+	user := r.Group("/users")
+
+	user.POST("/", controllers.CreateUser)
 	user.GET("/:id", controllers.GetUser)
 }

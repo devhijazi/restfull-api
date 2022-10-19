@@ -68,3 +68,13 @@ Restful API made in goLang using principles of Clean Code and Clean Architecture
   - Paginação
 - Entrada/Saida
 - Balance
+
+# To-do
+
+- Mudar logica do users para o service
+- Criar logica dos errors
+- Implementação de testes
+- Implementar Swagger
+- Code base Products
+- Code base Store
+- Autenticação com JWT
