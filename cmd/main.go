@@ -1,41 +1,58 @@
 package main
 
 import (
+	"fmt"
 	"log"
-	"net/http"
 	"os"
 
+	"github.com/devhijazi/api/internal/controllers"
 	"github.com/devhijazi/api/pkg/database"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	log.Println("Starting server...")
+	initDotEnv()
+	initDatabase()
+	initSwagger()
+	initServer()
+}
+
+func initDotEnv() {
 	err := godotenv.Load()
 
 	if err != nil {
 		log.Fatal("Error to loading .env file\n", err)
 	}
+}
 
-	// Inicializa a DB
-	ds := &database.DBSources{}
+func initDatabase() {
+	database.Init()
+}
 
-	// if err := ds.CreateConnectionDB(); err != nil {
-	// 	log.Fatalf("Unable to create database connection: %v\n", err)
-	// }
+func initSwagger() {}
 
-	// if err != nil {
-	// 	log.Fatalf("Unable to initialize database connection: %v\n", err)
-	// }
-	ds.CreateConnectionDB()
-	router := gin.New()
+func initServer() {
+	gin.SetMode(gin.ReleaseMode)
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	log.Println("Starting server...")
 
-	router.Run(":" + os.Getenv("PORT"))
+	r := gin.New()
+
+	r.Use(cors.New(cors.Config{AllowAllOrigins: true}))
+
+	initRoutes(r)
+
+	serverPort := fmt.Sprintf(":%s", os.Getenv("PORT"))
+
+	log.Printf("Api started on \"http://localhost%s\"", serverPort)
+
+	r.Run(serverPort)
+}
+
+func initRoutes(r *gin.Engine) {
+  user := r.Group("/users")
+  
+	user.GET("/:id", controllers.GetUser)
 }
