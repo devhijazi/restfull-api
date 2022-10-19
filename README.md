@@ -1,6 +1,6 @@
 # restfull-api
 
-Postgres | Gin | GoLang
+Restful API made in goLang using principles of Clean Code and Clean Architecture
 
 # Requisitos
 
@@ -37,6 +37,7 @@ Postgres | Gin | GoLang
 │   └── routes
 │       └── users.go
 ├── docker
+│   ├── docker-compose.yml
 │   └── Dockerfile
 ├── docs
 │   └── [swagger genenrate]
