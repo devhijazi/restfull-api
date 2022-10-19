@@ -36,5 +36,4 @@ func (DS *DBSources) CreateConnectionDB() {
 	}
 	DS.DB = db
 
-	return
 }
